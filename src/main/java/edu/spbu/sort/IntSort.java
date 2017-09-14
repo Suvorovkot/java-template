@@ -20,7 +20,8 @@ public class IntSort {
       if (array[pos] < array[t]) {
         swap(array, pos, t);
         pos = t;
-      } else {
+      }
+      else {
         break;
       }
     }
