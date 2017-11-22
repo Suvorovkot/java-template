@@ -11,11 +11,11 @@ public class MatrixGenerator
 {
   public static final int SEED1 = 1;
   public static final int SEED2 = 2;
-  public static final int EMPTY_ROW_FRACTION = 10;
+  public static final int EMPTY_ROW_FRACTION = 3;
 
   public static final String MATRIX1_NAME = "m1.txt";
   public static final String MATRIX2_NAME = "m2.txt";
-  public static final int SIZE = 2000;
+  public static final int SIZE = 10;
 
   private final int emptyRowFraction;
   private final int size;
@@ -38,7 +38,6 @@ public class MatrixGenerator
     {
       new MatrixGenerator(SEED1, EMPTY_ROW_FRACTION, MATRIX1_NAME, SIZE).generate();
       new MatrixGenerator(SEED2, EMPTY_ROW_FRACTION, MATRIX2_NAME, SIZE).generate();
-      testPerformance();
     }
     catch (IOException e)
     {
@@ -46,36 +45,12 @@ public class MatrixGenerator
     }
   }
 
-  private static void testPerformance()
-  {
-    // Uncomment the code to Test your library
-    /*
-    System.out.println("Starting loading dense matrices");
-    Matrix m1 = new DenseMatrix(MATRIX1_NAME);
-    System.out.println("1 loaded");
-    Matrix m2 = new DenseMatrix(MATRIX2_NAME);
-    System.out.println("2 loaded");
-    long start = System.currentTimeMillis();
-    m1.mul(m2);
-    System.out.println("Dense Matrix time: " +(System.currentTimeMillis() - start));
-
-    System.out.println("Starting loading sparse matrices");
-    m1 = new SparseMatrix(MATRIX1_NAME);
-    System.out.println("1 loaded");
-    m2 = new SparseMatrix(MATRIX2_NAME);
-    System.out.println("2 loaded");
-    start = System.currentTimeMillis();
-    m1.mul(m2);
-    System.out.println("Sparse Matrix time: " +(System.currentTimeMillis() - start));
-    */
-  }
 
   public void generate() throws IOException
   {
     PrintWriter out = new PrintWriter(new FileWriter(file));
     for (int i = 0; i < size; i++)
     {
-      // only 1/emptyRowFraction will have non 0 values
       if (rnd.nextInt(emptyRowFraction) == 0)
         out.println(generateRow());
       else
@@ -86,8 +61,7 @@ public class MatrixGenerator
 
   private String generateRow()
   {
-    return rnd.ints(0, emptyRowFraction).limit(size).mapToObj(r -> (r == 0) ? "" + rnd.nextInt(10000) : "0")
-            .collect(Collectors.joining(" "));
+    return rnd.ints(0, emptyRowFraction).limit(size).mapToObj(r -> (r == 0) ? "" + rnd.nextInt(100) : "0").collect(Collectors.joining(" "));
   }
 
 }
