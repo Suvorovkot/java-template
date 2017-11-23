@@ -42,7 +42,6 @@ public class MatrixTest
   @Test
   public void mulS_D () {
     SparseMatrix s_d = (SparseMatrix) Sparse1.multiplicationSD(Dense2);
-
     s_d.equals( Sparse1.mul(Dense2));
   }
 
@@ -66,11 +65,4 @@ public class MatrixTest
   }
 
 
-  /*@Test
-  public void mulDD() {
-    Matrix m1 = new DenseMatrix("m1.txt");
-    Matrix m2 = new DenseMatrix("m2.txt");
-    Matrix expected = new DenseMatrix("result.txt");
-    assertEquals(expected, m1.mul(m2));
-  }*/
 }

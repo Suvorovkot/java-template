@@ -13,6 +13,7 @@ import java.util.Map;
 public class DenseMatrix implements Matrix {
   public int size;
   public int matrix[][];
+  public Map<Integer, row> map;
 
   public DenseMatrix(int[][] matrix, int size) {
     this.size = size;
@@ -127,7 +128,7 @@ public class DenseMatrix implements Matrix {
    * @param o
    * @return
    */
-  @Override public Matrix dmul(Matrix o)
+  @Override public Matrix dmul(Matrix o, int threadNumber)
   {
     return null;
   }
@@ -138,8 +139,16 @@ public class DenseMatrix implements Matrix {
    * @return
    */
   @Override public boolean equals(Object o) {
-    return false;
+      boolean ch = false;
+      DenseMatrix oth = ((DenseMatrix) o).SparseTrans();
+      for (int i = 0; i < size; i++) {
+          for (int j = 0; j < size; j++) {
+              for (int k = 0; k < size; k++) {
+                  ch = this.matrix[i][k] == oth.matrix[j][k];
+              }
+          }
+      }
+      return ch;
   }
-
 }
 

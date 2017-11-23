@@ -1,8 +1,6 @@
 package edu.spbu.matrix;
 
-/**
- *
- */
+
 public interface Matrix
 {
   /**
@@ -18,6 +16,6 @@ public interface Matrix
    * @param o
    * @return
    */
-  Matrix dmul(Matrix o);
+  Matrix dmul(Matrix o,int threadNumber);
 
 }

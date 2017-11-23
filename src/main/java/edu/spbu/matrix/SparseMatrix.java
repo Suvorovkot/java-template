@@ -3,9 +3,11 @@ package edu.spbu.matrix;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 
 public class SparseMatrix  implements Matrix {
@@ -211,9 +213,42 @@ public class SparseMatrix  implements Matrix {
    * @return
    */
 
-  @Override public Matrix dmul(Matrix o)
-  {
-    return null;
+  @Override public Matrix dmul(Matrix o,int threadNumber) {
+      ExecutorService executor = Executors.newFixedThreadPool(threadNumber);
+      // List<Future<int[][]>> list = new ArrayList<Future<int[][]>>();
+
+      int part = this.size / threadNumber;
+      if (part < 1) {
+          part = 1;
+      }
+      for (int i = 0; i < this.size; i += part) {
+          System.err.println(i);
+          Callable<Matrix> worker = new CallableMultiplier(this, (SparseMatrix) o);
+          Future<Matrix> submit = executor.submit(worker);
+          //    list.add(submit);
+      }
+
+      // now retrieve the result
+      /*int start = 0;
+      int CF[][];
+      for (Future<int[][]> future : list) {
+          try {
+              CF = future.get();
+              for (int i=start; i < start+part; i += 1) {
+                  C[i] = CF[i];
+              }
+          } catch (InterruptedException e) {
+              e.printStackTrace();
+          } catch (ExecutionException e) {
+              e.printStackTrace();
+          }
+          start+=part;
+      }
+      executor.shutdown();
+
+      return C;*/
+      return null;
+
   }
 
   /**
@@ -222,6 +257,20 @@ public class SparseMatrix  implements Matrix {
    * @return
    */
   @Override public boolean equals(Object o) {
-    return false;
+      boolean ch = false;
+      SparseMatrix oth = ((SparseMatrix) o).SparseTrans();
+      for (int i = 0; i < size; i++) {
+          row a = map.get(i);
+          row b = oth.map.get(i);
+          if (a != null && b != null)
+          {
+              for (int j = 0; j < size; j++) {
+                  if (a.get(j) != null && b.get(j) != null)
+                      ch = (b.get(j) == a.get(j));
+                  }
+              }
+
+      }
+      return ch;
   }
 }
