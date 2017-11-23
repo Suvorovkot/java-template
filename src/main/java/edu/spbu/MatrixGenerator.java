@@ -12,9 +12,13 @@ public class MatrixGenerator
   public static final int SEED1 = 1;
   public static final int SEED2 = 2;
   public static final int EMPTY_ROW_FRACTION = 3;
+  public static final int  i = 1;
 
   public static final String MATRIX1_NAME = "m1.txt";
   public static final String MATRIX2_NAME = "m2.txt";
+  public static final String EMATRIX1_NAME = "em1.txt";
+  public static final String EMATRIX2_NAME = "em2.txt";
+
   public static final int SIZE = 10;
 
   private final int emptyRowFraction;
@@ -30,15 +34,21 @@ public class MatrixGenerator
     this.file = file;
     rnd = new Random(seed);
     emptyRow = Collections.nCopies(size, "0").stream().collect(Collectors.joining(" "));
+
   }
 
   public static void main(String args[])
   {
     try
     {
+
       new MatrixGenerator(SEED1, EMPTY_ROW_FRACTION, MATRIX1_NAME, SIZE).generate();
       new MatrixGenerator(SEED2, EMPTY_ROW_FRACTION, MATRIX2_NAME, SIZE).generate();
+      new MatrixGenerator(i, EMPTY_ROW_FRACTION, EMATRIX1_NAME, SIZE).generate();
+      new MatrixGenerator(4-i, EMPTY_ROW_FRACTION, EMATRIX2_NAME, SIZE).generate();
+
     }
+
     catch (IOException e)
     {
       System.out.println("Fail to generate matrix file: " + e);

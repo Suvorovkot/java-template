@@ -1,5 +1,6 @@
 package edu.spbu.matrix;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.*;
@@ -42,7 +43,8 @@ public class MatrixTest
   @Test
   public void mulS_D () {
     SparseMatrix s_d = (SparseMatrix) Sparse1.multiplicationSD(Dense2);
-    s_d.equals( Sparse1.mul(Dense2));
+
+    Assert.assertTrue(s_d.equals( Sparse1.mul(Dense2)));
   }
 
   @Test

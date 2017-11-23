@@ -257,7 +257,6 @@ public class SparseMatrix  implements Matrix {
    * @return
    */
   @Override public boolean equals(Object o) {
-      boolean ch = false;
       SparseMatrix oth = ((SparseMatrix) o).SparseTrans();
       for (int i = 0; i < size; i++) {
           row a = map.get(i);
@@ -266,11 +265,12 @@ public class SparseMatrix  implements Matrix {
           {
               for (int j = 0; j < size; j++) {
                   if (a.get(j) != null && b.get(j) != null)
-                      ch = (b.get(j) == a.get(j));
+                      if(b.get(j) != a.get(j))
+                          return false;
                   }
               }
 
       }
-      return ch;
+      return true;
   }
 }

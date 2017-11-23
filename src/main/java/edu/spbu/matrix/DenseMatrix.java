@@ -139,16 +139,16 @@ public class DenseMatrix implements Matrix {
    * @return
    */
   @Override public boolean equals(Object o) {
-      boolean ch = false;
       DenseMatrix oth = ((DenseMatrix) o).SparseTrans();
       for (int i = 0; i < size; i++) {
           for (int j = 0; j < size; j++) {
               for (int k = 0; k < size; k++) {
-                  ch = this.matrix[i][k] == oth.matrix[j][k];
+                  if (this.matrix[i][k] != oth.matrix[j][k])
+                      return false;
               }
           }
       }
-      return ch;
+      return true;
   }
 }
 
