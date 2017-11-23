@@ -30,6 +30,7 @@ public class EqualsTest {
     public void matEq ()
     {
 
+     //   Assert.assertFalse(Sparse2.equals(Sparse2));
         Assert.assertTrue(Sparse1.equals(Sparse2));
 
     }

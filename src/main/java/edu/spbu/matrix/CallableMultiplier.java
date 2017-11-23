@@ -13,5 +13,4 @@ public class CallableMultiplier implements Callable<Matrix> {
     {
         return Sparse1.multiplicationSS(Sparse2);
     }
-
 }

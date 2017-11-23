@@ -18,6 +18,8 @@ public class MatrixTest
   DenseMatrix Dense1;
   SparseMatrix Sparse2;
   DenseMatrix Dense2;
+  SparseMatrix res1;
+  DenseMatrix res2;
 
   public MatrixTest() {
     try {
@@ -32,37 +34,41 @@ public class MatrixTest
       Dense2 = new DenseMatrix(st);
 
       BufferedWriter bw = new BufferedWriter(new FileWriter(RESMATRIX_NAME));
-      ((SparseMatrix) Sparse1.mul(Dense2)).printS(bw);
+      (Dense1.multiplicationDS(Sparse2)).printS(bw);
       bw.close();
+      st = new BufferedReader(new FileReader(RESMATRIX_NAME));
+      res1 = new SparseMatrix(st);
+
     } catch (IOException e)
 
     {
       e.printStackTrace();
     }
+    res2 = Dense1.multiplicationDD(Dense2);
   }
   @Test
   public void mulS_D () {
     SparseMatrix s_d = (SparseMatrix) Sparse1.multiplicationSD(Dense2);
 
-    Assert.assertTrue(s_d.equals( Sparse1.mul(Dense2)));
+    Assert.assertTrue(s_d.equals(res1));
   }
 
   @Test
   public void mulS_S () {
     SparseMatrix s_s = (SparseMatrix) Sparse1.multiplicationSS(Sparse2);
-    s_s.equals( Sparse1.mul(Sparse2));
+    Assert.assertTrue(s_s.equals(res1));
   }
 
   @Test
   public void mulD_S () {
-    SparseMatrix d_s = (SparseMatrix) Sparse2.multiplicationSD(Dense1);
-    d_s.equals( Sparse2.mul(Dense1));
+    SparseMatrix d_s = Sparse2.SparseTrans().multiplicationSD(Dense1.SparseTrans()).SparseTrans();
+    Assert.assertTrue(d_s.equals(res1));
 
   }
   @Test
   public void mulD_D () {
     DenseMatrix d_d = (DenseMatrix) Dense1.multiplicationDD(Dense2);
-    d_d.equals( Dense1.mul(Dense2));
+    Assert.assertTrue(d_d.equals(res2));
 
   }
 

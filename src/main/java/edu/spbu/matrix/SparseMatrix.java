@@ -43,7 +43,7 @@ public class SparseMatrix  implements Matrix {
                     tmap.put(j, number);
                 }
             }
-            if (tmap != null) {
+            if ((tmap != null)&&(tmap.size()>0)) {
                 map.put(0, tmap);
             }
 
@@ -59,7 +59,7 @@ public class SparseMatrix  implements Matrix {
                         tmap.put(j, number);
                     }
                 }
-                if (tmap != null) {
+                if ((tmap != null)&&(tmap.size()>0)) {
                     map.put(i, tmap);
                 }
             }
@@ -67,8 +67,6 @@ public class SparseMatrix  implements Matrix {
             e.printStackTrace();
         }
     }
-
-
     public SparseMatrix SparseTrans() {
         Iterator<Map.Entry<Integer, row>> iter = map.entrySet().iterator(); // получаем строки
         HashMap<Integer, row> matrixTr = new HashMap<Integer, row>();
@@ -98,6 +96,8 @@ public class SparseMatrix  implements Matrix {
         if (other instanceof SparseMatrix) return this.multiplicationSS((SparseMatrix) other);
         else return this.multiplicationSD((DenseMatrix) other);
     }
+
+
 
     public SparseMatrix multiplicationSS(SparseMatrix other) {
 
@@ -169,7 +169,40 @@ public class SparseMatrix  implements Matrix {
 
         return res;
     }
+    /*public SparseMatrix multiplicationDS(DenseMatrix other) {
+        SparseMatrix res = new SparseMatrix(size);
+        other = other.SparseTrans();
+        int[][] a = other.matrix;
+        for (int i = 0; i < size; i++) {
+        Iterator<Map.Entry<Integer, row>> iter1 = this.map.entrySet().iterator();// итератор спарс матрицы
+        while (iter1.hasNext()) {
+            Map.Entry entry1 = iter1.next();
+            Integer key1 = (Integer) entry1.getKey();
+            int resValue = 0;
+            HashMap<Integer, Integer> value1 = (HashMap<Integer, Integer>) entry1.getValue();// получаем определенную строку
+            row resRow = new row();
+                Iterator iterElement = value1.entrySet().iterator(); // получаем элементы определенной строки
+                while (iterElement.hasNext()) {
+                    Map.Entry entryElement = (Map.Entry) iterElement.next();
+                    Integer keyElement = (Integer) entryElement.getKey();// столбец элемента
+                    Integer valueElement = (Integer) entryElement.getValue();// сам элемент
+                    if (other.matrix[i][keyElement] != 0) {
+                        resValue = resValue + valueElement * a[i][keyElement];
+                    }
+                }
+                if (resValue != 0) {
+                    resRow.put(i, resValue);
+                }
+            }
+            if (resRow != null) {
+                res.map.put(key1, resRow);
+            }
 
+        }
+
+        return res;
+    }
+    */
 
     public void printS(BufferedWriter matrix) {
         try {
@@ -265,11 +298,20 @@ public class SparseMatrix  implements Matrix {
           {
               for (int j = 0; j < size; j++) {
                   if (a.get(j) != null && b.get(j) != null)
+                  {
                       if(b.get(j) != a.get(j))
                           return false;
                   }
-              }
+                  /*else
+                      if((a.get(j) != null && b.get(j) == null)||(a.get(j) == null && b.get(j) != null))
+                              return false;*/
 
+                  }
+
+          }
+         /* else
+              if ((a != null && b == null)||(a == null && b != null))
+                  return false;*/
       }
       return true;
   }

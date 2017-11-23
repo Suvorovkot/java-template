@@ -44,8 +44,8 @@ public class MatrixGenerator
 
       new MatrixGenerator(SEED1, EMPTY_ROW_FRACTION, MATRIX1_NAME, SIZE).generate();
       new MatrixGenerator(SEED2, EMPTY_ROW_FRACTION, MATRIX2_NAME, SIZE).generate();
-      new MatrixGenerator(i, EMPTY_ROW_FRACTION, EMATRIX1_NAME, SIZE).generate();
-      new MatrixGenerator(4-i, EMPTY_ROW_FRACTION, EMATRIX2_NAME, SIZE).generate();
+     // new MatrixGenerator(i, 100, EMATRIX1_NAME, SIZE).generate();
+     // new MatrixGenerator(4-i, 100, EMATRIX2_NAME, SIZE).generate();
 
     }
 

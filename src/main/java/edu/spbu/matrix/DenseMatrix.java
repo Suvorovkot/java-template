@@ -20,6 +20,7 @@ public class DenseMatrix implements Matrix {
     this.matrix = matrix;
   }
 
+
   public DenseMatrix(int size) {
     this.matrix = new int[size][size];
     this.size = size;
@@ -139,15 +140,14 @@ public class DenseMatrix implements Matrix {
    * @return
    */
   @Override public boolean equals(Object o) {
-      DenseMatrix oth = ((DenseMatrix) o).SparseTrans();
+      DenseMatrix oth = ((DenseMatrix) o);
       for (int i = 0; i < size; i++) {
-          for (int j = 0; j < size; j++) {
-              for (int k = 0; k < size; k++) {
-                  if (this.matrix[i][k] != oth.matrix[j][k])
+          for (int j = 0; j < size; j++)
+              {
+                  if (this.matrix[i][j] != oth.matrix[i][j])
                       return false;
               }
           }
-      }
       return true;
   }
 }
