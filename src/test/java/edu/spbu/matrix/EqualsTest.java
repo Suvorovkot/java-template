@@ -10,16 +10,16 @@ public class EqualsTest {
 
 
     BufferedReader st;
-    SparseMatrix Sparse1;
-    SparseMatrix Sparse2;
+    SparseMatrix em1;
+    DenseMatrix em2;
 
     public EqualsTest() {
         try {
             st = new BufferedReader(new FileReader(MATRIX1_NAME));
-            Sparse1 = new SparseMatrix(st);
+            em1 = new SparseMatrix(st);
 
             st = new BufferedReader(new FileReader(MATRIX2_NAME));
-            Sparse2 = new SparseMatrix(st);
+            em2 = new DenseMatrix(st);
         } catch (IOException e)
 
         {
@@ -30,8 +30,8 @@ public class EqualsTest {
     public void matEq ()
     {
 
-     //   Assert.assertFalse(Sparse2.equals(Sparse2));
-        Assert.assertTrue(Sparse1.equals(Sparse2));
+      //  Assert.assertFalse(em1.equals(em2));
+        Assert.assertTrue(em1.equals(em2));
 
     }
 }

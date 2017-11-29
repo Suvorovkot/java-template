@@ -1,4 +1,4 @@
-package edu.spbu;
+package edu.spbu.matrix;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class MatrixGenerator
   public static final String EMATRIX1_NAME = "em1.txt";
   public static final String EMATRIX2_NAME = "em2.txt";
 
-  public static final int SIZE = 10;
+  public static final int SIZE = 4;
 
   private final int emptyRowFraction;
   private final int size;

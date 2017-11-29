@@ -1,6 +1,6 @@
-package edu.spbu;
+package edu.spbu.matrix;
 
-import edu.spbu.MatrixGenerator;
+import edu.spbu.matrix.MatrixGenerator;
 import org.junit.After;
 import org.junit.Test;
 

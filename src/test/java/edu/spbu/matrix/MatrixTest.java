@@ -36,33 +36,32 @@ public class MatrixTest
       BufferedWriter bw = new BufferedWriter(new FileWriter(RESMATRIX_NAME));
       (Dense1.multiplicationDS(Sparse2)).printS(bw);
       bw.close();
-      st = new BufferedReader(new FileReader(RESMATRIX_NAME));
-      res1 = new SparseMatrix(st);
 
     } catch (IOException e)
 
     {
       e.printStackTrace();
     }
+
     res2 = Dense1.multiplicationDD(Dense2);
   }
   @Test
   public void mulS_D () {
     SparseMatrix s_d = (SparseMatrix) Sparse1.multiplicationSD(Dense2);
 
-    Assert.assertTrue(s_d.equals(res1));
+    Assert.assertTrue(s_d.equals(res2));
   }
 
   @Test
   public void mulS_S () {
     SparseMatrix s_s = (SparseMatrix) Sparse1.multiplicationSS(Sparse2);
-    Assert.assertTrue(s_s.equals(res1));
+    Assert.assertTrue(s_s.equals(res2));
   }
 
   @Test
   public void mulD_S () {
     SparseMatrix d_s = Sparse2.SparseTrans().multiplicationSD(Dense1.SparseTrans()).SparseTrans();
-    Assert.assertTrue(d_s.equals(res1));
+    Assert.assertTrue(d_s.equals(res2));
 
   }
   @Test

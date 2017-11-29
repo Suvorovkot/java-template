@@ -1,4 +1,4 @@
-package edu.spbu;
+package edu.spbu.matrix;
 
 import edu.spbu.matrix.*;
 

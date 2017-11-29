@@ -248,38 +248,6 @@ public class SparseMatrix  implements Matrix {
 
   @Override public Matrix dmul(Matrix o,int threadNumber) {
       ExecutorService executor = Executors.newFixedThreadPool(threadNumber);
-      // List<Future<int[][]>> list = new ArrayList<Future<int[][]>>();
-
-      int part = this.size / threadNumber;
-      if (part < 1) {
-          part = 1;
-      }
-      for (int i = 0; i < this.size; i += part) {
-          System.err.println(i);
-          Callable<Matrix> worker = new CallableMultiplier(this, (SparseMatrix) o);
-          Future<Matrix> submit = executor.submit(worker);
-          //    list.add(submit);
-      }
-
-      // now retrieve the result
-      /*int start = 0;
-      int CF[][];
-      for (Future<int[][]> future : list) {
-          try {
-              CF = future.get();
-              for (int i=start; i < start+part; i += 1) {
-                  C[i] = CF[i];
-              }
-          } catch (InterruptedException e) {
-              e.printStackTrace();
-          } catch (ExecutionException e) {
-              e.printStackTrace();
-          }
-          start+=part;
-      }
-      executor.shutdown();
-
-      return C;*/
       return null;
 
   }
@@ -290,28 +258,22 @@ public class SparseMatrix  implements Matrix {
    * @return
    */
   @Override public boolean equals(Object o) {
-      SparseMatrix oth = ((SparseMatrix) o).SparseTrans();
+      DenseMatrix oth = ((DenseMatrix) o).SparseTrans();
+      int [][] b = oth.matrix;
       for (int i = 0; i < size; i++) {
           row a = map.get(i);
-          row b = oth.map.get(i);
-          if (a != null && b != null)
+          if (a != null)
           {
               for (int j = 0; j < size; j++) {
-                  if (a.get(j) != null && b.get(j) != null)
+                  if (a.get(j) != null && b[i][j] != 0)
                   {
-                      if(b.get(j) != a.get(j))
+                      if(b[i][j] != a.get(j))
                           return false;
                   }
-                  /*else
-                      if((a.get(j) != null && b.get(j) == null)||(a.get(j) == null && b.get(j) != null))
-                              return false;*/
 
                   }
 
           }
-         /* else
-              if ((a != null && b == null)||(a == null && b != null))
-                  return false;*/
       }
       return true;
   }
