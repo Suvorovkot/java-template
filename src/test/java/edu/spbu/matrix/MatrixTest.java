@@ -72,6 +72,7 @@ public class MatrixTest
   @Test
   public void mulD_S () {
     SparseMatrix d_s = Sparse2.SparseTrans().multiplicationSD(Dense1.SparseTrans()).SparseTrans();
+    //SparseMatrix d_s = Dense1.multiplicationDS(Sparse2);
     Assert.assertTrue(d_s.equals(res2));
 
   }

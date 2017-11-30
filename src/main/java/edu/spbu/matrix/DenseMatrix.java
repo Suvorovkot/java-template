@@ -74,7 +74,7 @@ public class DenseMatrix implements Matrix {
     }
 
 
-    /*public SparseMatrix multiplicationDS(SparseMatrix o) {
+    public SparseMatrix multiplicationDS(SparseMatrix o) {
         o = o.SparseTrans();
         SparseMatrix res = new SparseMatrix(size);
         for (int i = 0; i < size; i++) {
@@ -101,7 +101,7 @@ public class DenseMatrix implements Matrix {
             }
         }
         return res;
-    }*/
+    }
 
 
     public DenseMatrix SparseTrans() {

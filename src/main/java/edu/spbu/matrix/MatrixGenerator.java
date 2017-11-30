@@ -19,7 +19,7 @@ public class MatrixGenerator
   public static final String EMATRIX1_NAME = "em1.txt";
   public static final String EMATRIX2_NAME = "em2.txt";
 
-  public static final int SIZE = 500;
+  public static final int SIZE = 1000;
 
   private final int emptyRowFraction;
   private final int size;

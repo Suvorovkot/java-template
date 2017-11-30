@@ -38,12 +38,12 @@ class MultThread extends Thread
     @Override
     public void run()
     {
-        System.out.println("Thread " + getName() + " started. Calculating cells from " + beg + " to " + end + "...");
+      //  System.out.println("Thread " + getName() + " started. Calculating cells from " + beg + " to " + end + "...");
 
         final int colCount = m2.size;  // Число столбцов результирующей матрицы.
         for (int i = beg; i < end; ++i)
             calcValue(i / colCount, i % colCount);
 
-        System.out.println("Thread " + getName() + " finished.");
+      //  System.out.println("Thread " + getName() + " finished.");
     }
 }
