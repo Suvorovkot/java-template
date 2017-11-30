@@ -18,7 +18,7 @@ public class MatrixTest
   DenseMatrix Dense1;
   SparseMatrix Sparse2;
   DenseMatrix Dense2;
-  SparseMatrix res1;
+  Matrix res1;
   DenseMatrix res2;
 
   public MatrixTest() {
@@ -34,7 +34,11 @@ public class MatrixTest
       Dense2 = new DenseMatrix(st);
 
       BufferedWriter bw = new BufferedWriter(new FileWriter(RESMATRIX_NAME));
-      (Dense1.multiplicationDS(Sparse2)).printS(bw);
+      ((DenseMatrix)(Dense1.dmul(Dense2,2))).printD(bw);
+      bw.write("\n");
+      Dense1.multiplicationDD(Dense2).printD(bw);
+
+     // Sparse1.multiplicationSD(Dense2).printS(bw);
       bw.close();
 
     } catch (IOException e)
@@ -44,7 +48,14 @@ public class MatrixTest
     }
 
     res2 = Dense1.multiplicationDD(Dense2);
+
   }
+  @Test
+  public void mulTh () {
+    DenseMatrix d = (DenseMatrix) Dense1.dmul(Dense2, 4);
+    Assert.assertTrue(d.equals(res2));
+  }
+
   @Test
   public void mulS_D () {
     SparseMatrix s_d = (SparseMatrix) Sparse1.multiplicationSD(Dense2);

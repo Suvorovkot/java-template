@@ -247,9 +247,7 @@ public class SparseMatrix  implements Matrix {
    */
 
   @Override public Matrix dmul(Matrix o,int threadNumber) {
-      ExecutorService executor = Executors.newFixedThreadPool(threadNumber);
       return null;
-
   }
 
   /**
@@ -258,21 +256,25 @@ public class SparseMatrix  implements Matrix {
    * @return
    */
   @Override public boolean equals(Object o) {
-      DenseMatrix oth = ((DenseMatrix) o).SparseTrans();
+      DenseMatrix oth = ((DenseMatrix) o);
       int [][] b = oth.matrix;
       for (int i = 0; i < size; i++) {
           row a = map.get(i);
           if (a != null)
           {
               for (int j = 0; j < size; j++) {
-                  if (a.get(j) != null && b[i][j] != 0)
-                  {
+                  if (a.get(j) != null && b[i][j] != 0) {
                       if(b[i][j] != a.get(j))
-                          return false;
-                  }
+                      {   System.out.print(b[i][j]+' '+a.get(j)+'\n');
+                          return false;}
 
                   }
-
+              }
+          }
+          else for (int j = 0; j < size; j++) {
+              if (b[i][j] != 0)
+              {   System.out.print(b[i][j]+'\n');
+                  return false;}
           }
       }
       return true;

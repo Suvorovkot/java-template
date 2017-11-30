@@ -8,7 +8,7 @@ import java.net.InetSocketAddress;
 
 public class HttpServer {
 
-    public static void main(String[] args) throws Exception {
+   /* public static void main(String[] args) throws Exception {
         HttpServer server = HttpServer.create();
         server.bind(new InetSocketAddress(8765), 0);
 
@@ -48,5 +48,5 @@ public class HttpServer {
                 return new Failure(403);
             else
                 return new Success(new HttpPrincipal("c0nst", "realm"));
-        }
+        }*/
     }

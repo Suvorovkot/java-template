@@ -59,23 +59,22 @@ public class DenseMatrix implements Matrix {
   public Matrix mul(Matrix o)
   {
       if (o instanceof DenseMatrix) return this.multiplicationDD((DenseMatrix) o);
-      else return this.multiplicationDS((SparseMatrix) o);
+      else return ((SparseMatrix) o).SparseTrans().multiplicationSD(this.SparseTrans()).SparseTrans();
   }
 
     public DenseMatrix multiplicationDD(DenseMatrix o) {
         DenseMatrix res = new DenseMatrix(size);
         for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                for (int k = 0; k < size; k++) {
-                    res.matrix[i][j] += this.matrix[i][k] * o.matrix[j][k];
-                }
-            }
+             for (int j = 0; j < size; j++)
+                for (int k = 0; k < size; k++)
+                    res.matrix[i][j] += this.matrix[i][k] * o.matrix[k][j];
         }
+
         return res;
     }
 
 
-    public SparseMatrix multiplicationDS(SparseMatrix o) {
+    /*public SparseMatrix multiplicationDS(SparseMatrix o) {
         o = o.SparseTrans();
         SparseMatrix res = new SparseMatrix(size);
         for (int i = 0; i < size; i++) {
@@ -102,7 +101,7 @@ public class DenseMatrix implements Matrix {
             }
         }
         return res;
-    }
+    }*/
 
 
     public DenseMatrix SparseTrans() {
@@ -118,7 +117,17 @@ public class DenseMatrix implements Matrix {
     }
 
 
-
+    public void printD(BufferedWriter matrix) {
+        try {
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++)
+                    matrix.write(this.matrix[i][j] + " ");
+                matrix.write("\n");
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
 
 
@@ -131,7 +140,37 @@ public class DenseMatrix implements Matrix {
    */
   @Override public Matrix dmul(Matrix o, int threadNumber)
   {
-    return null;
+      assert threadNumber > 0;
+      DenseMatrix oth = ((DenseMatrix) o);
+      final int rowCount = this.size;             // Число строк результирующей матрицы.
+      final int colCount = oth.size;         // Число столбцов результирующей матрицы.
+      final int[][] res = new int[rowCount][colCount];  // Результирующая матрица.
+
+      final int cellsForThread = (rowCount * colCount) / threadNumber;  // Число вычисляемых ячеек на поток.
+      int beg = 0;
+      final MultThread[] mulThreads = new MultThread[threadNumber];
+
+
+      for (int ti = threadNumber - 1; ti >= 0; --ti) {
+          int end = beg + cellsForThread;
+          if (ti == 0) {
+              end = rowCount * colCount;
+          }
+          mulThreads[ti] = new MultThread(this, oth, res, beg, end);
+          mulThreads[ti].start();
+          beg = end;
+      }
+
+      // Ожидание завершения потоков.
+      try {
+          for (final MultThread multiplierThread : mulThreads)
+              multiplierThread.join();
+      }
+      catch (InterruptedException e) {
+          e.printStackTrace();
+      }
+
+      return new DenseMatrix(res,size);
   }
 
   /**
